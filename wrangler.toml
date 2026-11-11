@@ -11,7 +11,7 @@ crons = ["*/15 * * * *", "0 0 * * *"]
 [[d1_databases]]
 binding = "DB"
 database_name = "bantin"
-database_id = "THAY_BANG_ID_SAU_KHI_CHAY_wrangler_d1_create"
+database_id = "56bf8a2c-3cee-44d1-9625-c367b29a2379"
 
 [ai]
 binding = "AI"
