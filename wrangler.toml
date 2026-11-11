@@ -23,10 +23,10 @@ enabled = true
 # Số nguồn kéo mỗi lần cron (giữ nhỏ vì gói Free giới hạn 10 ms CPU/lần chạy)
 FETCH_BATCH = "3"
 # Số tin gửi LLM chấm điểm mỗi lần cron
-LLM_BATCH = "15"
+LLM_BATCH = "10"
 # Thứ tự thử nhà cung cấp LLM; lỗi/hết hạn mức thì chuyển sang cái kế tiếp
 LLM_ORDER = "groq,gemini,mistral,workersai"
-GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_MODEL = "openai/gpt-oss-120b"
 GEMINI_MODEL = "gemini-flash-lite-latest"
 MISTRAL_MODEL = "mistral-small-latest"
 WORKERS_AI_MODEL = "@cf/meta/llama-3.1-8b-instruct"
