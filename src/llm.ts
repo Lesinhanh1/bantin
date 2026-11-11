@@ -49,7 +49,10 @@ async function openAICompat(url: string, key: string, model: string, messages: C
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-    body: JSON.stringify({ model, messages, temperature: 0.2, max_tokens: 2500 }),
+    body: JSON.stringify({
+      model, messages, temperature: 0.2, max_tokens: 4000,
+      ...(model.startsWith('openai/gpt-oss') ? { reasoning_effort: 'low' } : {}),
+    }),
     signal: AbortSignal.timeout(45_000),
   });
   if (!res.ok) {
