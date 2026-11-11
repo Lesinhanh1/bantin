@@ -1,0 +1,42 @@
+name = "bantin"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+
+# Cron (giờ UTC):
+#  - mỗi 15 phút: kéo vài nguồn đến hạn + chấm điểm một lô tin
+#  - 00:00 UTC = 7:00 sáng giờ Việt Nam: gửi bản tin Telegram + dọn tin cũ
+[triggers]
+crons = ["*/15 * * * *", "0 0 * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "bantin"
+database_id = "THAY_BANG_ID_SAU_KHI_CHAY_wrangler_d1_create"
+
+[ai]
+binding = "AI"
+
+[observability]
+enabled = true
+
+[vars]
+# Số nguồn kéo mỗi lần cron (giữ nhỏ vì gói Free giới hạn 10 ms CPU/lần chạy)
+FETCH_BATCH = "3"
+# Số tin gửi LLM chấm điểm mỗi lần cron
+LLM_BATCH = "15"
+# Thứ tự thử nhà cung cấp LLM; lỗi/hết hạn mức thì chuyển sang cái kế tiếp
+LLM_ORDER = "groq,gemini,mistral,workersai"
+GROQ_MODEL = "llama-3.3-70b-versatile"
+GEMINI_MODEL = "gemini-flash-lite-latest"
+MISTRAL_MODEL = "mistral-small-latest"
+WORKERS_AI_MODEL = "@cf/meta/llama-3.1-8b-instruct"
+# Bản tin sáng
+DIGEST_MIN_SCORE = "6"
+DIGEST_SIZE = "10"
+# Bỏ tin cũ hơn N ngày khi kéo về; xoá tin chưa lưu cũ hơn M ngày
+MAX_AGE_DAYS = "5"
+RETENTION_DAYS = "30"
+
+# Secrets (đặt bằng `npx wrangler secret put <TÊN>`, KHÔNG ghi vào file này):
+#   ACCESS_TOKEN, GROQ_API_KEY, GEMINI_API_KEY, MISTRAL_API_KEY,
+#   TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
